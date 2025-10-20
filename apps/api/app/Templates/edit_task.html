@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Task</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    label { display: block; margin-top: 10px; }
+    input, select { width: 300px; padding: 5px; margin-top: 4px; }
+    button { margin-top: 20px; padding: 8px 18px; }
+  </style>
+</head>
+<body>
+  <h2>Edit Task: {{task.name}}</h2>
+  <form method="post">
+    <label>Task Name:</label>
+    <input type="text" name="name" value="{{task.name}}" required>
+
+    <label>Pillar:</label>
+    <select name="pillar" required>
+      <option value="HARD_WORK" {% if task.pillar=='HARD_WORK' %}selected{% endif %}>Hard Work</option>
+      <option value="CALMNESS" {% if task.pillar=='CALMNESS' %}selected{% endif %}>Calmness</option>
+      <option value="FAMILY" {% if task.pillar=='FAMILY' %}selected{% endif %}>Family</option>
+    </select>
+
+    <label>
+      <input type="checkbox" name="is_daily_followup" {% if task.is_daily_followup %}checked{% endif %}> Daily Follow-up
+    </label>
+
+    <label>
+      <input type="checkbox" name="is_separately_monitored" {% if task.is_separately_monitored %}checked{% endif %}> Separately Monitored
+    </label>
+
+    <button type="submit">Save Changes</button>
+  </form>
+
+  <p><a href="/makingmehappier/task/{{task.id}}">⬅️ Back to Task Detail</a></p>
+</body>
+</html>

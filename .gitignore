@@ -1,6 +1,36 @@
-venv/
+# Python / FastAPI
 __pycache__/
 *.pyc
-.env
+*.pyo
+*.pyd
+*.sqlite3
 *.db
-node_modules/
+*.log
+
+# Virtual Environment
+.venv/
+env/
+venv/
+
+# IDE / Editor files
+.vscode/
+.idea/
+.DS_Store
+
+# Environment variables
+.env
+*.env
+
+# Compiled files / caches
+*.egg-info/
+*.pytest_cache/
+
+# Docker / build cache
+*.pid
+*.tar
+*.bak
+*.swp
+*.tmp
+
+# Local backups
+backup_*.db

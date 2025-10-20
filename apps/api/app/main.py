@@ -1,11 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.routers import add_task
 
-# 👇 this sets the base path
 app = FastAPI(
-    title="MakingMeHappier API",
+    title="Making Me Happier",
     version="0.1.0",
-    root_path="/makingmehappier"
 )
 
 app.add_middleware(
@@ -16,10 +15,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def root():
-    return {"message": "Welcome to MakingMeHappier!"}
+# ✅ Include router with prefix
+app.include_router(add_task.router, prefix="/makingmehappier")
 
-@app.get("/add_task")
-def add_task():
-    return {"message": "This is the add_task endpoint"}
+@app.get("/makingmehappier")
+def home():
+    return {"message": "Welcome to Making Me Happier!"}

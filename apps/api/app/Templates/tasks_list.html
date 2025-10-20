@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>All Tasks</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    table { border-collapse: collapse; width: 90%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f4f4f4; }
+    a { text-decoration: none; color: blue; }
+  </style>
+</head>
+<body>
+  <h2>All Tasks</h2>
+  <a href="/makingmehappier/add_task">➕ Add New Task</a>
+  <table>
+    <tr><th>Name</th><th>Pillar</th><th>Daily?</th><th>Goal?</th></tr>
+    {% for t in tasks %}
+      <tr>
+        <td><a href="/makingmehappier/task/{{t.id}}">{{t.name}}</a></td>
+        <td>{{t.pillar}}</td>
+        <td>{{'Yes' if t.is_daily_followup else 'No'}}</td>
+        <td>{{'Yes' if t.is_separately_monitored else 'No'}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

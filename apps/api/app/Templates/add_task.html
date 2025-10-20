@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add a New Task – Making Me Happier</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #c7ffd8, #98c1d9, #b8bedd);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      background: #ffffffee;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      padding: 40px 60px;
+      width: 480px;
+      text-align: center;
+      animation: fadeIn 0.8s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        width: 90%;
+        padding: 25px 20px;
+      }
+      h1 {
+        font-size: 1.4rem;
+        word-wrap: break-word;
+      }
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+
+    .subtitle {
+      color: #6c757d;
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-weight: 600;
+      color: #333;
+      margin-top: 15px;
+      font-size: 0.95rem;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-top: 6px;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #5c7cfa;
+      box-shadow: 0 0 6px #5c7cfa;
+    }
+
+    .checkbox {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: start;
+    }
+
+    button {
+      background-color: #00b894;
+      color: white;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 30px;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #019870;
+      transform: scale(1.03);
+    }
+
+    .motivation {
+      color: #007b83;
+      font-weight: 600;
+      margin-top: 15px;
+      font-size: 1rem;
+    }
+
+    .footer {
+      margin-top: 25px;
+      color: #666;
+      font-size: 0.85rem;
+    }
+
+    .why-section {
+      margin-top: 20px;
+      background-color: #f2fff5;
+      border-radius: 12px;
+      padding: 10px 15px;
+      text-align: left;
+    }
+
+    .why-section h3 {
+      margin: 5px 0;
+      color: #2d6a4f;
+      font-size: 1rem;
+    }
+
+    .why-input {
+      margin-top: 8px;
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #9ec5ab;
+      font-size: 0.95rem;
+    }
+
+    .add-why-btn {
+      background-color: #74c69d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 15px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .add-why-btn:hover {
+      background-color: #52b788;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>✨ Add a New Task</h1>
+    <p class="subtitle">Transform your day — one habit, one action at a time 💪</p>
+
+    <form method="post" action="/makingmehappier/add_task">
+      <label>Task Name</label>
+      <input type="text" name="name" placeholder="e.g., Morning Yoga or Study Python" required />
+
+      <label>Category (Pillar)</label>
+      <select name="pillar" required>
+        <option value="HARD_WORK">Hard Work (Study, Work, Learn)</option>
+        <option value="CALMNESS">Calmness (Meditation, Sleep, Yoga)</option>
+        <option value="FAMILY">Family (Leisure, Travel, Connection)</option>
+      </select>
+
+      <label>Allocated Time (minutes)</label>
+      <input type="number" name="allocated_time" min="5" max="480" placeholder="e.g., 60" required />
+
+      <label>Frequency</label>
+      <select name="frequency" id="frequency" onchange="toggleIdealGap()" required>
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+        <option value="one_time">One Time</option>
+      </select>
+
+      <div id="ideal-gap-container" style="display:none;">
+        <label>Ideal Gap (days)</label>
+        <input type="number" name="ideal_gap_days" placeholder="e.g., 30" />
+      </div>
+
+      <label>Success Target %</label>
+      <input type="number" name="success_target_percent" value="90" min="0" max="100" />
+
+      <div class="checkbox">
+        <input type="checkbox" name="is_daily_followup" />
+        <label style="margin:0;">Daily Follow-up?</label>
+      </div>
+
+      <div class="checkbox">
+        <input type="checkbox" name="is_separately_monitored" />
+        <label style="margin:0;">Monitor Progress Separately?</label>
+      </div>
+
+      <!-- NLP Why Chain -->
+      <div class="why-section" id="why-section">
+        <h3>Find Your Why 🌱</h3>
+        <p style="font-size:0.9rem;color:#555;">Understanding why you want this task will connect it to your deeper values.</p>
+        <div id="why-container">
+          <input type="text" class="why-input" name="why_reason[]" placeholder="Why do I want to do this?" />
+        </div>
+        <button type="button" class="add-why-btn" onclick="addWhy()">+ Add Another Why</button>
+      </div>
+
+      <button type="submit">🚀 Add My Task</button>
+      <p class="motivation">"Every new habit plants the seed of a better you!" 🌿</p>
+    </form>
+
+    <div class="footer">
+      <a href="/makingmehappier/tasks" style="color:#5c7cfa;text-decoration:none;">View My Tasks →</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleIdealGap() {
+      const freq = document.getElementById("frequency").value;
+      const gapDiv = document.getElementById("ideal-gap-container");
+      gapDiv.style.display = freq === "monthly" ? "block" : "none";
+    }
+
+    function addWhy() {
+      const container = document.getElementById("why-container");
+      const newInput = document.createElement("input");
+      newInput.type = "text";
+      newInput.name = "why_reason[]";
+      newInput.placeholder = "Why else is this important to me?";
+      newInput.className = "why-input";
+      container.appendChild(newInput);
+    }
+  </script>
+</body>
+</html>

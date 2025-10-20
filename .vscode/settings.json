@@ -1,6 +1,0 @@
-{
-    "python.defaultInterpreterPath": "/Users/mbiswal/projects/makingmehappier/apps/api/.venv/bin/python",
-    "python.envFile": "/Users/mbiswal/projects/makingmehappier/apps/api/.env",
-    "python.analysis.autoImportCompletions": true,
-    "python.analysis.typeCheckingMode": "basic"
-}

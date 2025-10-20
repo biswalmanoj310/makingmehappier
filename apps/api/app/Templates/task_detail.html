@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{task.name}} – Details</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style> body { font-family: Arial; margin: 40px; } canvas { max-width: 700px; } </style>
+</head>
+<body>
+  <h2>{{task.name}}</h2>
+  <p><strong>Pillar:</strong> {{task.pillar}}</p>
+  <p><strong>Daily Follow-up:</strong> {{'Yes' if task.is_daily_followup else 'No'}}</p>
+  <p><strong>Separately Monitored:</strong> {{'Yes' if task.is_separately_monitored else 'No'}}</p>
+
+  <a href="/makingmehappier/task/{{task.id}}/edit">✏️ Edit Task</a> |
+  <a href="/makingmehappier/tasks">⬅️ Back to List</a>
+
+  <h3>Weekly Time Graph</h3>
+  <canvas id="weekChart"></canvas>
+
+  <h3>Monthly Time Graph</h3>
+  <canvas id="monthChart"></canvas>
+
+  <script>
+    const weekData = {{week_data | tojson}};
+    const monthData = {{month_data | tojson}};
+
+    function renderChart(canvasId, dataObj, label) {
+      const ctx = document.getElementById(canvasId).getContext("2d");
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(dataObj),
+          datasets: [{
+            label: label,
+            data: Object.values(dataObj),
+            backgroundColor: '#4e79a7'
+          }]
+        },
+      });
+    }
+
+    renderChart("weekChart", weekData, "Minutes per Day (Last 7 Days)");
+    renderChart("monthChart", monthData, "Minutes per Day (Last 30 Days)");
+  </script>
+</body>
+</html>
